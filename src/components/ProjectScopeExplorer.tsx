@@ -119,7 +119,7 @@ const ProjectScopeExplorer: React.FC = () => {
             <div className="flex-1 overflow-y-auto pr-2 space-y-6">
               {services.map((category) => (
                 <div key={category.category}>
-                  <h4 className="text-sm font-medium text-[#a49981] mb-2 sticky top-0 bg-background/95 backdrop-blur-sm py-2">
+                  <h4 className="text-sm font-medium text-[#a49981] mb-2 sticky top-0 backdrop-blur-sm py-2">
                     {category.category}
                   </h4>
                   <div className="space-y-3">
