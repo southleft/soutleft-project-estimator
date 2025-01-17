@@ -49,10 +49,10 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ result, onContactUs }) 
 
       <div className="bg-accent/10 border border-accent/20 p-6 rounded-lg hover:shadow-glow transition-all duration-300">
         <div className="flex items-start space-x-4">
-          <div className="p-2 bg-accent/20 rounded-lg">
+          <div className="p-2 bg-accent/20 rounded-lg flex-shrink-0">
             <Lightbulb className="w-6 h-6 text-accent" />
           </div>
-          <div>
+          <div className="flex-1 min-w-0">
             <h3 className="font-semibold text-lg mb-2 text-text">Southleft AI Insight</h3>
             <p className="text-text/80">{result.aiInsight}</p>
           </div>
