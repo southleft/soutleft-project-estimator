@@ -15,14 +15,6 @@ export default function App() {
       <main className="py-8">
         <ProjectScopeExplorer />
       </main>
-      <footer className="border-t border-accent/20 py-8 mt-16">
-        <div className="flex items-center justify-between">
-          <span className="font-semibold">Southleft</span>
-          <p className="text-sm text-text/70">
-            © {new Date().getFullYear()} All rights reserved
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

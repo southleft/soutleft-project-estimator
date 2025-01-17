@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ProjectContext } from '../types/project';
-import { Plus, Minus, HelpCircle } from 'lucide-react';
+import { Plus, Minus, HelpCircle, RefreshCw } from 'lucide-react';
 
 type ProjectContextFormProps = {
   context: ProjectContext;
@@ -37,20 +37,52 @@ const LabelWithTooltip: React.FC<{ label: string; tooltip: string }> = ({ label,
 };
 
 const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChange }) => {
+  const [description, setDescription] = useState(context.description);
   const [showSystemIntegrationTooltip, setShowSystemIntegrationTooltip] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    const { name, value, type } = e.target;
+    if (name === 'description') {
+      setDescription(value);
+    } else {
+      onChange({
+        ...context,
+        [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
+      });
+    }
+  };
+
+  const handleRefreshEstimate = () => {
+    onChange({
+      ...context,
+      description: description,
+    });
+  };
 
   return (
     <div className="space-y-6">
       <div>
-        <LabelWithTooltip
-          label="Tell us about your project"
-          tooltip="Share your project vision and requirements to help us understand your needs better."
-        />
+        <div className="flex items-center justify-between mb-2">
+          <LabelWithTooltip
+            label="Tell us about your project"
+            tooltip="Share your project vision and requirements to help us understand your needs better."
+          />
+          <button
+            onClick={handleRefreshEstimate}
+            className="p-1.5 rounded-md hover:bg-accent/10 text-text/70 hover:text-accent transition-colors"
+            title="Update estimate with description"
+          >
+            <RefreshCw className="w-4 h-4" />
+          </button>
+        </div>
         <textarea
-          value={context.description}
-          onChange={(e) => onChange({ ...context, description: e.target.value })}
+          name="description"
+          value={description}
+          onChange={handleChange}
           placeholder="Share your project vision and requirements..."
-          className="mt-2 w-full h-32 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text resize-none"
+          className="mt-2 w-full h-32 px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text resize-none"
         />
       </div>
 
@@ -79,11 +111,12 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
           tooltip="Outline your timeline priorities to keep your project on track, whether urgent or flexible."
         />
         <select
+          name="timeline"
           value={context.timeline}
-          onChange={(e) => onChange({ ...context, timeline: e.target.value as ProjectContext['timeline'] })}
+          onChange={handleChange}
           className="mt-2 block w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
         >
-          <option value="Urgent">Urgent</option>
+          <option value="Urgent">Urgent (ASAP)</option>
           <option value="Normal">Normal</option>
           <option value="Flexible">Flexible</option>
         </select>
@@ -119,8 +152,9 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
           tooltip="Determine the volume of data processing required to customize your scalable solutions."
         />
         <select
+          name="dataVolume"
           value={context.dataVolume}
-          onChange={(e) => onChange({ ...context, dataVolume: e.target.value as ProjectContext['dataVolume'] })}
+          onChange={handleChange}
           className="mt-2 block w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
         >
           <option value="Low">Low</option>
@@ -133,11 +167,12 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
         <div className="flex items-center">
           <input
             type="checkbox"
-            checked={context.existingSystemIntegration}
-            onChange={(e) => onChange({ ...context, existingSystemIntegration: e.target.checked })}
-            className="mt-1 rounded border-accent/20 text-accent focus:ring-accent"
+            name="systemIntegration"
+            checked={context.systemIntegration}
+            onChange={handleChange}
+            className="rounded border-accent/20 bg-background text-accent focus:ring-accent"
           />
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center">
             <span className="text-sm font-medium text-[#a49981]">Integration with existing systems required</span>
             <div className="relative inline-block">
               <button
@@ -164,8 +199,9 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
           tooltip="Choose the ideal team size to match your project scope and delivery targets."
         />
         <select
+          name="teamSize"
           value={context.teamSize}
-          onChange={(e) => onChange({ ...context, teamSize: e.target.value as ProjectContext['teamSize'] })}
+          onChange={handleChange}
           className="mt-2 block w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
         >
           <option value="Small">Small (1-3 developers)</option>

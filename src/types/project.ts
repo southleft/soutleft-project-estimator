@@ -12,6 +12,7 @@ export type ProjectContext = {
   dataVolume: 'Low' | 'Medium' | 'High';
   teamSize: 'Small' | 'Medium' | 'Large';
   systemIntegration: boolean;
+  apiIntegrations: number;
   description: string;
 };
 

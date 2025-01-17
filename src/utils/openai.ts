@@ -11,40 +11,30 @@ export async function generateEstimate(
   selectedServiceIds: string[],
   projectContext: ProjectContext
 ) {
-  // Get full service details for better context
   const selectedServices = selectedServiceIds.map(id => {
     const service = services
       .flatMap(category => category.items)
       .find(item => item.id === id);
-    return service ? `${service.title} - ${service.description}` : id;
+    return service ? `${service.title}` : id;
   });
 
-  const prompt = `As an experienced technical project manager and cost estimator, analyze the following project requirements and provide a detailed estimate:
+  const prompt = `Generate a software project estimate for:
 
-Project Services:
-${selectedServices.map((service, i) => `${i + 1}. ${service}`).join('\n')}
+Services: ${selectedServices.join(', ')}
+Timeline: ${projectContext.timeline}
+Data Volume: ${projectContext.dataVolume}
+Team Size: ${projectContext.teamSize}
+Integration: ${projectContext.systemIntegration ? 'Required' : 'Not Required'}
+API Integrations: ${projectContext.apiIntegrations}
+Complexity: ${projectContext.complexity}/10
+${projectContext.description ? `Details: ${projectContext.description}` : ''}
 
-Project Context:
-- Timeline Preference: ${projectContext.timeline}
-- Data Volume: ${projectContext.dataVolume}
-- Team Size: ${projectContext.teamSize}
-- System Integration Needed: ${projectContext.systemIntegration ? 'Yes' : 'No'}
-- Project Complexity (1-10): ${projectContext.complexity}
-${projectContext.description ? `- Additional Details: ${projectContext.description}` : ''}
-
-Based on the above requirements, provide a comprehensive project estimate. Consider:
-1. Service complexity and interdependencies
-2. Team size and composition
-3. Data volume impact on architecture
-4. Integration requirements
-5. Timeline constraints
-
-Respond with a JSON object containing:
+Respond with a JSON object:
 {
   "timelineRange": "X-Y months",
   "investmentRange": "$XXk-$YYk",
-  "complexityRating": <number between 1-10>,
-  "aiInsight": "<detailed analysis of key considerations, risks, and recommendations>"
+  "complexityRating": <1-10>,
+  "aiInsight": "<key considerations and recommendations>"
 }`;
 
   try {
@@ -52,15 +42,15 @@ Respond with a JSON object containing:
       messages: [
         {
           role: "system",
-          content: "You are an expert technical project manager with extensive experience in software development cost estimation."
+          content: "You are a technical project estimator. Be concise but insightful."
         },
         {
           role: "user",
           content: prompt
         }
       ],
-      model: "gpt-4-turbo-preview",
-      temperature: 0.7,
+      model: "gpt-3.5-turbo",
+      temperature: 0.3,
       response_format: { type: "json_object" }
     });
 

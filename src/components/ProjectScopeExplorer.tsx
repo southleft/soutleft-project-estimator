@@ -11,10 +11,10 @@ import { generateEstimate } from '../utils/openai';
 const initialProjectContext: ProjectContext = {
   complexity: 5,
   timeline: 'Normal',
-  apiIntegrations: 0,
   dataVolume: 'Medium',
-  existingSystemIntegration: false,
   teamSize: 'Small',
+  systemIntegration: false,
+  apiIntegrations: 0,
   description: '',
 };
 
