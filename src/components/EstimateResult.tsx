@@ -1,13 +1,21 @@
-import React from 'react';
-import { EstimateResult as EstimateResultType } from '../types/project';
+import React, { useState } from 'react';
+import { EstimateResult as EstimateResultType, ProjectSubmission, Service } from '../types/project';
 import { Clock, DollarSign, BarChart2, Lightbulb, Send } from 'lucide-react';
+import ContactFormModal from './ContactFormModal';
 
 type EstimateResultProps = {
   result: EstimateResultType;
-  onContactUs: () => void;
+  selectedServices: Service[];
+  projectContext: ProjectSubmission['projectContext'];
 };
 
-const EstimateResult: React.FC<EstimateResultProps> = ({ result, onContactUs }) => {
+const EstimateResult: React.FC<EstimateResultProps> = ({
+  result,
+  selectedServices,
+  projectContext,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-3 gap-4">
@@ -61,16 +69,25 @@ const EstimateResult: React.FC<EstimateResultProps> = ({ result, onContactUs }) 
 
       <div className="flex flex-col items-center">
         <button
-          onClick={onContactUs}
-          className="px-8 py-4 bg-accent text-text rounded-lg font-semibold hover:bg-accent/90 transition-colors flex items-center space-x-2 hover:shadow-glow transition-all duration-300"
+          onClick={() => setIsModalOpen(true)}
+          className="o-button"
         >
-          <Send className="w-5 h-5" />
-          <span>Receive Your Custom AI Estimate</span>
+          <span data-text="Book a Meeting to Discuss Your Estimate">Book a Meeting to Discuss Your Estimate</span>
         </button>
         <p className="mt-3 text-sm text-text/70 text-center">
-          Powered by Southleft AI, receive a personalized estimate that aligns with your project's needs and goals.
+          Get personalized insights and discuss your project details with our team.
         </p>
       </div>
+
+      <ContactFormModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        projectData={{
+          selectedServices,
+          projectContext,
+          estimateResult: result,
+        }}
+      />
     </div>
   );
 };

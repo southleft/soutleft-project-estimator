@@ -92,7 +92,25 @@ const ProjectScopeExplorer: React.FC = () => {
                 {error}
               </div>
             ) : (
-              estimate && <EstimateResult result={estimate} onContactUs={handleContactUs} />
+              estimate && (
+                <EstimateResult
+                  result={estimate}
+                  selectedServices={services
+                    .flatMap(category =>
+                      category.items.map(item => ({
+                        ...item,
+                        category: category.category
+                      }))
+                    )
+                    .filter(service => selectedServices.includes(service.id))}
+                  projectContext={projectContext}
+                  onSubmit={async (submission) => {
+                    // Here you would typically send this data to your backend
+                    console.log('Project Submission:', submission);
+                    alert('Thank you! We will contact you shortly to schedule a meeting.');
+                  }}
+                />
+              )
             )}
           </motion.div>
         )}

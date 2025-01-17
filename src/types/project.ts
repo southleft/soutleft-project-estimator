@@ -22,3 +22,16 @@ export type EstimateResult = {
   complexityRating: number;
   aiInsight: string;
 };
+
+export type ProjectSubmission = {
+  selectedServices: Service[];
+  projectContext: ProjectContext;
+  estimateResult: EstimateResult;
+  submittedAt: string;
+  contactInfo: {
+    name: string;
+    email: string;
+    company?: string;
+    phone?: string;
+  };
+};
