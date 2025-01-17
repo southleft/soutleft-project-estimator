@@ -93,17 +93,25 @@ const ProjectScopeExplorer: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-8 gap-20">
-      {/* Main Content Grid - Always First on Mobile */}
+    <div className="flex flex-col space-y-8">
+      {/* Estimate Section - Last on Mobile, First on Desktop */}
+      {estimate && selectedServices.length > 0 && (
+        <div className="order-2 md:order-1">
+          <h2 className="text-xl font-semibold text-text/90 mb-4">Estimated Services</h2>
+          <EstimateResult result={estimate} onContactUs={handleContactUs} />
+        </div>
+      )}
+
+      {/* Main Content Grid */}
       <div className="order-1 md:order-2">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Available Services Column */}
-          <div className="space-y-4">
+          <div className="flex flex-col h-full space-y-4">
             <h3 className="text-lg font-semibold text-text/90">Available Services</h3>
-            <div className="space-y-6">
+            <div className="flex-1 overflow-y-auto pr-2 space-y-6 scrollbar-thin scrollbar-thumb-accent/20 scrollbar-track-background/50 hover:scrollbar-thumb-accent/40">
               {services.map((category) => (
                 <div key={category.category}>
-                  <h4 className="text-sm font-medium text-text/70 mb-2">
+                  <h4 className="text-sm font-medium text-text/70 mb-2 sticky top-0 bg-background/95 backdrop-blur-sm py-2">
                     {category.category}
                   </h4>
                   <div className="space-y-3">
@@ -126,16 +134,16 @@ const ProjectScopeExplorer: React.FC = () => {
           </div>
 
           {/* Selected Services Column */}
-          <div className="space-y-4">
+          <div className="flex flex-col h-full space-y-4">
             <h3 className="text-lg font-semibold text-text/90">Selected Services</h3>
             <div
-              className={`min-h-[400px] rounded-lg border-2 border-dashed
+              className={`flex-1 rounded-lg border-2 border-dashed
                 ${
                   selectedServices.length === 0
                     ? 'border-accent/40 bg-accent/5'
                     : 'border-accent bg-accent/10'
                 }
-                p-4 space-y-3`}
+                p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-accent/20 scrollbar-track-background/50`}
               onDragOver={(e) => {
                 e.preventDefault();
                 e.currentTarget.classList.add('border-accent', 'bg-accent/20');
@@ -191,20 +199,14 @@ const ProjectScopeExplorer: React.FC = () => {
           </div>
 
           {/* Project Details Column */}
-          <div className="space-y-4">
+          <div className="flex flex-col h-full space-y-4">
             <h3 className="text-lg font-semibold text-text/90">Project Details</h3>
-            <ProjectContextForm context={projectContext} onChange={handleContextChange} />
+            <div className="flex-1">
+              <ProjectContextForm context={projectContext} onChange={handleContextChange} />
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Estimate Section - Last on Mobile, First on Desktop */}
-      {estimate && selectedServices.length > 0 && (
-        <div className="order-2 md:order-1">
-          <h2 className="text-xl font-semibold text-text/90 mb-4">Estimated Services</h2>
-          <EstimateResult result={estimate} onContactUs={handleContactUs} />
-        </div>
-      )}
     </div>
   );
 };

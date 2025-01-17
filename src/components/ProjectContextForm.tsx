@@ -8,7 +8,7 @@ type ProjectContextFormProps = {
 };
 
 const Tooltip: React.FC<{ text: string }> = ({ text }) => (
-  <div className="absolute z-10 w-64 p-2 mt-1 text-sm text-text bg-background/95 border border-accent/20 rounded-lg shadow-lg">
+  <div className="absolute z-50 w-[280px] p-3 -translate-x-1/2 left-1/2 mt-2 text-sm bg-[#f3f1eb] text-[#333] border border-accent/20 rounded-lg shadow-lg whitespace-normal">
     {text}
   </div>
 );
@@ -17,15 +17,16 @@ const LabelWithTooltip: React.FC<{ label: string; tooltip: string }> = ({ label,
   const [showTooltip, setShowTooltip] = useState(false);
 
   return (
-    <div className="flex items-center space-x-2 group">
+    <div className="flex items-center space-x-2">
       <span className="text-sm font-medium text-text/90">{label}</span>
-      <div className="relative">
+      <div className="relative inline-block">
         <button
           type="button"
           onClick={() => setShowTooltip(!showTooltip)}
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
-          className="p-1 text-text/50 hover:text-accent focus:outline-none"
+          className="p-1 text-text/50 hover:text-accent focus:outline-none transition-colors"
+          aria-label="More information"
         >
           <HelpCircle className="w-4 h-4" />
         </button>
@@ -36,6 +37,8 @@ const LabelWithTooltip: React.FC<{ label: string; tooltip: string }> = ({ label,
 };
 
 const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChange }) => {
+  const [showSystemIntegrationTooltip, setShowSystemIntegrationTooltip] = useState(false);
+
   return (
     <div className="space-y-6">
       <div>
@@ -132,21 +135,24 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
             type="checkbox"
             checked={context.existingSystemIntegration}
             onChange={(e) => onChange({ ...context, existingSystemIntegration: e.target.checked })}
-            className="mt-1 rounded border-accent/20 text-accent focus:ring-accent"
+            className="mt-1.5 rounded border-accent/20 text-accent focus:ring-accent"
           />
           <div className="flex items-center space-x-2">
             <span className="text-sm font-medium text-text/90">Integration with existing systems required</span>
-            <div className="relative">
+            <div className="relative inline-block">
               <button
                 type="button"
-                onClick={() => {}}
-                className="p-1 text-text/50 hover:text-accent focus:outline-none group"
+                onClick={() => setShowSystemIntegrationTooltip(!showSystemIntegrationTooltip)}
+                onMouseEnter={() => setShowSystemIntegrationTooltip(true)}
+                onMouseLeave={() => setShowSystemIntegrationTooltip(false)}
+                className="p-1 text-text/50 hover:text-accent focus:outline-none transition-colors"
+                aria-label="More information"
               >
                 <HelpCircle className="w-4 h-4" />
-                <div className="absolute left-0 bottom-full mb-2 hidden group-hover:block z-10 w-64 p-2 text-sm text-text bg-background/95 border border-accent/20 rounded-lg shadow-lg">
-                  Indicate if integration with existing systems is required, ensuring compatibility and efficiency.
-                </div>
               </button>
+              {showSystemIntegrationTooltip && (
+                <Tooltip text="Indicate if integration with existing systems is required, ensuring compatibility and efficiency." />
+              )}
             </div>
           </div>
         </div>
