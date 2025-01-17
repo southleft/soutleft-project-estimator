@@ -18,7 +18,7 @@ const LabelWithTooltip: React.FC<{ label: string; tooltip: string }> = ({ label,
 
   return (
     <div className="flex items-center space-x-2">
-      <span className="text-sm font-medium text-text/90">{label}</span>
+      <span className="text-sm font-medium text-[#a49981]">{label}</span>
       <div className="relative inline-block">
         <button
           type="button"
@@ -130,7 +130,7 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
       </div>
 
       <div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center">
           <input
             type="checkbox"
             checked={context.existingSystemIntegration}
@@ -138,7 +138,7 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
             className="mt-1 rounded border-accent/20 text-accent focus:ring-accent"
           />
           <div className="flex items-center space-x-2">
-            <span className="text-sm font-medium text-text/90">Integration with existing systems required</span>
+            <span className="text-sm font-medium text-[#a49981]">Integration with existing systems required</span>
             <div className="relative inline-block">
               <button
                 type="button"

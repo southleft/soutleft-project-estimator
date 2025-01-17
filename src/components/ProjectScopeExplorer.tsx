@@ -94,10 +94,10 @@ const ProjectScopeExplorer: React.FC = () => {
 
   return (
     <div className="flex flex-col space-y-8">
-      {/* Estimate Section - Last on Mobile, First on Desktop */}
+      {/* Estimate Section */}
       {estimate && selectedServices.length > 0 && (
         <div className="order-2 md:order-1">
-          <h2 className="text-xl font-semibold text-text/90 mb-4">Estimated Services</h2>
+          <h2 className="text-xl font-semibold text-[#a49981] mb-4">Estimated Services</h2>
           <EstimateResult result={estimate} onContactUs={handleContactUs} />
         </div>
       )}
@@ -107,11 +107,11 @@ const ProjectScopeExplorer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Available Services Column */}
           <div className="flex flex-col h-full space-y-4">
-            <h3 className="text-lg font-semibold text-text/90">Available Services</h3>
+            <h3 className="text-lg font-semibold text-[#a49981]">Available Services</h3>
             <div className="flex-1 overflow-y-auto pr-2 space-y-6">
               {services.map((category) => (
                 <div key={category.category}>
-                  <h4 className="text-sm font-medium text-text/70 mb-2 sticky top-0 bg-background/95 backdrop-blur-sm py-2">
+                  <h4 className="text-sm font-medium text-[#a49981] mb-2 sticky top-0 bg-background/95 backdrop-blur-sm py-2">
                     {category.category}
                   </h4>
                   <div className="space-y-3">
@@ -135,7 +135,7 @@ const ProjectScopeExplorer: React.FC = () => {
 
           {/* Selected Services Column */}
           <div className="flex flex-col h-full space-y-4">
-            <h3 className="text-lg font-semibold text-text/90">Selected Services</h3>
+            <h3 className="text-lg font-semibold text-[#a49981]">Selected Services</h3>
             <div
               className={`flex-1 rounded-lg border-2 border-dashed
                 ${
@@ -200,7 +200,7 @@ const ProjectScopeExplorer: React.FC = () => {
 
           {/* Project Details Column */}
           <div className="flex flex-col h-full space-y-4">
-            <h3 className="text-lg font-semibold text-text/90">Project Details</h3>
+            <h3 className="text-lg font-semibold text-[#a49981]">Project Details</h3>
             <div className="flex-1">
               <ProjectContextForm context={projectContext} onChange={handleContextChange} />
             </div>
