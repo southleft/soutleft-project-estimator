@@ -8,7 +8,8 @@ export default defineConfig({
     rollupOptions: {
       external: ['react', 'react-dom'],
       output: {
-        format: 'iife',
+        format: 'umd',
+        name: 'SouthleftProjectEstimator',
         globals: {
           'react': 'React',
           'react-dom': 'ReactDOM'
