@@ -26,7 +26,7 @@ html {
 }
 
 /* Custom scrollbar */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 8px;
 }
 
@@ -41,4 +41,4 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(240, 87, 53, 0.5);
-}
+} */

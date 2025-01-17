@@ -108,7 +108,7 @@ const ProjectScopeExplorer: React.FC = () => {
           {/* Available Services Column */}
           <div className="flex flex-col h-full space-y-4">
             <h3 className="text-lg font-semibold text-text/90">Available Services</h3>
-            <div className="flex-1 overflow-y-auto pr-2 space-y-6 scrollbar-thin scrollbar-thumb-accent/20 scrollbar-track-background/50 hover:scrollbar-thumb-accent/40">
+            <div className="flex-1 overflow-y-auto pr-2 space-y-6">
               {services.map((category) => (
                 <div key={category.category}>
                   <h4 className="text-sm font-medium text-text/70 mb-2 sticky top-0 bg-background/95 backdrop-blur-sm py-2">
@@ -143,7 +143,7 @@ const ProjectScopeExplorer: React.FC = () => {
                     ? 'border-accent/40 bg-accent/5'
                     : 'border-accent bg-accent/10'
                 }
-                p-4 overflow-y-auto scrollbar-thin scrollbar-thumb-accent/20 scrollbar-track-background/50`}
+                p-4 overflow-y-auto`}
               onDragOver={(e) => {
                 e.preventDefault();
                 e.currentTarget.classList.add('border-accent', 'bg-accent/20');

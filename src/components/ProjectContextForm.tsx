@@ -50,7 +50,7 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
           value={context.description}
           onChange={(e) => onChange({ ...context, description: e.target.value })}
           placeholder="Share your project vision and requirements..."
-          className="mt-2 w-full h-32 px-3 py-2 bg-background border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text resize-none"
+          className="mt-2 w-full h-32 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text resize-none"
         />
       </div>
 
@@ -81,7 +81,7 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
         <select
           value={context.timeline}
           onChange={(e) => onChange({ ...context, timeline: e.target.value as ProjectContext['timeline'] })}
-          className="mt-2 block w-full px-3 py-2 bg-background border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
+          className="mt-2 block w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
         >
           <option value="Urgent">Urgent</option>
           <option value="Normal">Normal</option>
@@ -121,7 +121,7 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
         <select
           value={context.dataVolume}
           onChange={(e) => onChange({ ...context, dataVolume: e.target.value as ProjectContext['dataVolume'] })}
-          className="mt-2 block w-full px-3 py-2 bg-background border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
+          className="mt-2 block w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
         >
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
@@ -130,12 +130,12 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
       </div>
 
       <div>
-        <div className="flex items-start space-x-2">
+        <div className="flex items-center space-x-2">
           <input
             type="checkbox"
             checked={context.existingSystemIntegration}
             onChange={(e) => onChange({ ...context, existingSystemIntegration: e.target.checked })}
-            className="mt-1.5 rounded border-accent/20 text-accent focus:ring-accent"
+            className="mt-1 rounded border-accent/20 text-accent focus:ring-accent"
           />
           <div className="flex items-center space-x-2">
             <span className="text-sm font-medium text-text/90">Integration with existing systems required</span>
@@ -166,7 +166,7 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
         <select
           value={context.teamSize}
           onChange={(e) => onChange({ ...context, teamSize: e.target.value as ProjectContext['teamSize'] })}
-          className="mt-2 block w-full px-3 py-2 bg-background border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
+          className="mt-2 block w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
         >
           <option value="Small">Small (1-3 developers)</option>
           <option value="Medium">Medium (4-7 developers)</option>
