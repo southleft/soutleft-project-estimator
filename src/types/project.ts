@@ -9,10 +9,9 @@ export type Service = {
 export type ProjectContext = {
   complexity: number;
   timeline: 'Urgent' | 'Normal' | 'Flexible';
-  apiIntegrations: number;
   dataVolume: 'Low' | 'Medium' | 'High';
-  existingSystemIntegration: boolean;
   teamSize: 'Small' | 'Medium' | 'Large';
+  systemIntegration: boolean;
   description: string;
 };
 

@@ -6,6 +6,7 @@ import ProjectContextForm from './ProjectContextForm';
 import EstimateResult from './EstimateResult';
 import type { ProjectContext, EstimateResult as EstimateResultType } from '../types/project';
 import { MoveHorizontal, X } from 'lucide-react';
+import { generateEstimate } from '../utils/openai';
 
 const initialProjectContext: ProjectContext = {
   complexity: 5,
@@ -17,75 +18,50 @@ const initialProjectContext: ProjectContext = {
   description: '',
 };
 
-const calculateEstimate = (
-  selectedServices: string[],
-  context: ProjectContext
-): EstimateResultType => {
-  const baseTimePerService = 2;
-  const totalServices = selectedServices.length;
-
-  let timelineMultiplier = context.timeline === 'Urgent' ? 0.8 : context.timeline === 'Flexible' ? 1.2 : 1;
-  let baseTime = totalServices * baseTimePerService;
-  let minWeeks = Math.max(4, Math.round(baseTime * timelineMultiplier * 0.8));
-  let maxWeeks = Math.round(baseTime * timelineMultiplier * 1.2);
-
-  const baseRate = 15000;
-  let investmentMultiplier = 1 + (context.complexity - 5) * 0.1;
-  let minInvestment = Math.round((baseRate * totalServices * investmentMultiplier * 0.9) / 1000) * 1000;
-  let maxInvestment = Math.round((baseRate * totalServices * investmentMultiplier * 1.1) / 1000) * 1000;
-
-  let complexityRating = Math.min(
-    10,
-    Math.round(
-      (context.complexity +
-        totalServices +
-        context.apiIntegrations * 0.5 +
-        (context.dataVolume === 'High' ? 2 : context.dataVolume === 'Medium' ? 1 : 0) +
-        (context.existingSystemIntegration ? 1 : 0)) /
-        2
-    )
-  );
-
-  const insights = [
-    `Based on your selections, we recommend a ${
-      context.teamSize === 'Small' ? 'focused agile team' : 'scaled agile approach'
-    }.`,
-    `This project's complexity suggests ${
-      complexityRating > 7 ? 'a phased delivery approach' : 'an iterative development cycle'
-    } would be optimal.`,
-    `With the current scope, we can deliver impactful results within the estimated timeline.`,
-  ];
-
-  return {
-    timelineRange: `${minWeeks}-${maxWeeks} weeks`,
-    investmentRange: `$${(minInvestment / 1000).toFixed(0)}k-${(maxInvestment / 1000).toFixed(0)}k`,
-    complexityRating,
-    aiInsight: insights[Math.floor(Math.random() * insights.length)],
-  };
-};
-
 const ProjectScopeExplorer: React.FC = () => {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [projectContext, setProjectContext] = useState<ProjectContext>(initialProjectContext);
   const [estimate, setEstimate] = useState<EstimateResultType | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleAddService = (serviceId: string) => {
+  const handleAddService = async (serviceId: string) => {
     if (!selectedServices.includes(serviceId)) {
       const newSelectedServices = [...selectedServices, serviceId];
       setSelectedServices(newSelectedServices);
-      setEstimate(calculateEstimate(newSelectedServices, projectContext));
+      await updateEstimate(newSelectedServices, projectContext);
     }
   };
 
-  const removeService = (serviceId: string) => {
+  const removeService = async (serviceId: string) => {
     const newSelectedServices = selectedServices.filter((id) => id !== serviceId);
     setSelectedServices(newSelectedServices);
-    setEstimate(calculateEstimate(newSelectedServices, projectContext));
+    await updateEstimate(newSelectedServices, projectContext);
   };
 
-  const handleContextChange = (newContext: ProjectContext) => {
+  const handleContextChange = async (newContext: ProjectContext) => {
     setProjectContext(newContext);
-    setEstimate(calculateEstimate(selectedServices, newContext));
+    await updateEstimate(selectedServices, newContext);
+  };
+
+  const updateEstimate = async (services: string[], context: ProjectContext) => {
+    if (services.length === 0) {
+      setEstimate(null);
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const result = await generateEstimate(services, context);
+      setEstimate(result);
+    } catch (err) {
+      setError('Failed to generate estimate. Please try again.');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleContactUs = () => {
@@ -96,7 +72,7 @@ const ProjectScopeExplorer: React.FC = () => {
     <div className="flex flex-col space-y-8 gap-8">
       {/* Estimate Section */}
       <AnimatePresence>
-        {estimate && selectedServices.length > 0 && (
+        {(estimate || isLoading) && selectedServices.length > 0 && (
           <motion.div
             className="order-2 md:order-1"
             initial={{ opacity: 0, height: 0, y: -20 }}
@@ -104,8 +80,20 @@ const ProjectScopeExplorer: React.FC = () => {
             exit={{ opacity: 0, height: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <h2 className="text-xl font-semibold text-[#a49981] mb-4">Estimated Services</h2>
-            <EstimateResult result={estimate} onContactUs={handleContactUs} />
+            <h2 className="text-xl font-semibold text-[#a49981] mb-4">
+              {isLoading ? 'Generating Estimate...' : 'Estimated Services'}
+            </h2>
+            {isLoading ? (
+              <div className="flex items-center justify-center p-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
+              </div>
+            ) : error ? (
+              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500">
+                {error}
+              </div>
+            ) : (
+              estimate && <EstimateResult result={estimate} onContactUs={handleContactUs} />
+            )}
           </motion.div>
         )}
       </AnimatePresence>
