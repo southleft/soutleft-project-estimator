@@ -1,5 +1,6 @@
 import React from 'react';
 import * as Icons from 'lucide-react';
+import { Plus } from 'lucide-react';
 
 type ServiceCardProps = {
   id: string;
@@ -25,7 +26,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
   return (
     <div
-      className="group relative cursor-grab active:cursor-grabbing transform hover:scale-[1.02] transition-all duration-300"
+      className="group relative cursor-grab active:cursor-grabbing transform hover:scale-[1.02] transition-all duration-300 md:cursor-grab md:active:cursor-grabbing"
       draggable="true"
       onDragStart={handleDragStart}
     >
@@ -40,6 +41,12 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           </div>
         </div>
       </div>
+      <button
+        onClick={() => onAdd(id)}
+        className="md:hidden absolute top-2 right-2 p-1.5 rounded-full bg-accent/10 text-accent opacity-100 hover:bg-accent hover:text-text transition-all duration-300"
+      >
+        <Plus className="w-4 h-4" />
+      </button>
     </div>
   );
 };

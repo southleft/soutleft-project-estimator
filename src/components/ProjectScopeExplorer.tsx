@@ -93,14 +93,22 @@ const ProjectScopeExplorer: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-8">
+    <div className="flex flex-col space-y-8 gap-8">
       {/* Estimate Section */}
-      {estimate && selectedServices.length > 0 && (
-        <div className="order-2 md:order-1">
-          <h2 className="text-xl font-semibold text-[#a49981] mb-4">Estimated Services</h2>
-          <EstimateResult result={estimate} onContactUs={handleContactUs} />
-        </div>
-      )}
+      <AnimatePresence>
+        {estimate && selectedServices.length > 0 && (
+          <motion.div
+            className="order-2 md:order-1"
+            initial={{ opacity: 0, height: 0, y: -20 }}
+            animate={{ opacity: 1, height: 'auto', y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          >
+            <h2 className="text-xl font-semibold text-[#a49981] mb-4">Estimated Services</h2>
+            <EstimateResult result={estimate} onContactUs={handleContactUs} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Main Content Grid */}
       <div className="order-1 md:order-2">
@@ -162,37 +170,40 @@ const ProjectScopeExplorer: React.FC = () => {
               {selectedServices.length === 0 ? (
                 <div className="h-full flex items-center justify-center text-text/50">
                   <div className="text-center">
-                    <MoveHorizontal className="w-12 h-12 mx-auto mb-2" />
-                    <p>Drag services here</p>
+                    <MoveHorizontal className="w-12 h-12 mx-auto mb-2 hidden md:block" />
+                    <p className="hidden md:block">Drag services here</p>
+                    <p className="md:hidden">Tap the + icon to add services</p>
                   </div>
                 </div>
               ) : (
                 <AnimatePresence>
-                  {selectedServices.map((serviceId) => {
-                    const service = services
-                      .flatMap((cat) => cat.items)
-                      .find((s) => s.id === serviceId);
-                    if (!service) return null;
+                  <div className="space-y-3">
+                    {selectedServices.map((serviceId) => {
+                      const service = services
+                        .flatMap((cat) => cat.items)
+                        .find((s) => s.id === serviceId);
+                      if (!service) return null;
 
-                    return (
-                      <motion.div
-                        key={service.id}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                      >
-                        <div className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-accent/20">
-                          <span className="text-text">{service.title}</span>
-                          <button
-                            onClick={() => removeService(service.id)}
-                            className="p-1 rounded-md hover:bg-accent/10 text-text/70 hover:text-accent"
-                          >
-                            <X className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </motion.div>
-                    );
-                  })}
+                      return (
+                        <motion.div
+                          key={service.id}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, x: -20 }}
+                        >
+                          <div className="flex items-center justify-between p-3 rounded-lg bg-background/50 border border-accent/20">
+                            <span className="text-text">{service.title}</span>
+                            <button
+                              onClick={() => removeService(service.id)}
+                              className="p-1 rounded-md hover:bg-accent/10 text-text/70 hover:text-accent"
+                            >
+                              <X className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 </AnimatePresence>
               )}
             </div>
