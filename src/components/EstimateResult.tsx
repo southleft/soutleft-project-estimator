@@ -18,7 +18,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({
 
   return (
     <div className="space-y-8">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-background/50 border border-accent/20 p-6 rounded-lg hover:shadow-glow transition-all duration-300">
           <div className="flex items-center space-x-2 mb-4">
             <Clock className="w-6 h-6 text-accent" />
