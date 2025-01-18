@@ -149,7 +149,7 @@ const ProjectScopeExplorer: React.FC = () => {
                     ? 'border-accent/40 bg-accent/5'
                     : 'border-accent bg-accent/10'
                 }
-                p-4 overflow-y-auto`}
+                p-4`}
               onDragOver={(e) => {
                 e.preventDefault();
                 e.currentTarget.classList.add('border-accent', 'bg-accent/20');

@@ -14,54 +14,9 @@ type ContactFormModalProps = {
 const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose, projectData }) => {
   const [state, handleSubmit] = useForm("xqaaowvp");
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-
-    // Add formatted project details
-    formData.append('Selected Services', projectData.selectedServices.map(service =>
-      `${service.category}: ${service.title}`
-    ).join('\n'));
-
-    formData.append('Timeline', projectData.estimateResult.timelineRange);
-    formData.append('Investment', projectData.estimateResult.investmentRange);
-    formData.append('Complexity Rating', projectData.estimateResult.complexityRating.toString());
-    formData.append('AI Insight', projectData.estimateResult.aiInsight);
-
-    // Add project context
-    formData.append('Project Timeline Priority', projectData.projectContext.timeline);
-    formData.append('Data Volume', projectData.projectContext.dataVolume);
-    formData.append('Team Size', projectData.projectContext.teamSize);
-    formData.append('System Integration Required', projectData.projectContext.systemIntegration ? 'Yes' : 'No');
-    formData.append('Number of API Integrations', projectData.projectContext.apiIntegrations.toString());
-    formData.append('Project Complexity', `${projectData.projectContext.complexity}/10`);
-
-    if (projectData.projectContext.description) {
-      formData.append('Project Description', projectData.projectContext.description);
-    }
-
-    // Also include raw data for reference
-    formData.append('_rawProjectData', JSON.stringify({
-      selectedServices: projectData.selectedServices,
-      projectContext: projectData.projectContext,
-      estimateResult: projectData.estimateResult,
-      submittedAt: new Date().toISOString(),
-    }));
-
-    await handleSubmit(e);
-    if (state.succeeded) {
-      onClose();
-    }
-  };
-
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-50"
-        onClose={onClose}
-      >
+      <Dialog as="div" className="relative z-50" onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -94,7 +49,7 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose, pr
                 </button>
 
                 <Dialog.Title className="text-xl font-semibold text-[#a49981] mb-6">
-                  Book a Meeting to Discuss Your Estimate
+                  {state.succeeded ? 'Thank You!' : 'Book a Meeting to Discuss Your Estimate'}
                 </Dialog.Title>
 
                 {state.succeeded ? (
@@ -113,45 +68,35 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose, pr
                     </a>
                   </div>
                 ) : (
-                  <form onSubmit={handleFormSubmit} className="space-y-10">
+                  <form onSubmit={handleSubmit} className="space-y-10">
                     <div className="o-field flex-wrap">
                       <input
-                        type="text"
                         id="name"
+                        type="text"
                         name="name"
                         placeholder="Name"
                         required
                       />
                       <label htmlFor="name">Name<span>*</span></label>
-                      <ValidationError
-                        prefix="Name"
-                        field="name"
-                        errors={state.errors}
-                        className="text-red-500 text-sm mt-1"
-                      />
+                      <ValidationError prefix="Name" field="name" errors={state.errors} />
                     </div>
 
                     <div className="o-field flex-wrap">
                       <input
-                        type="email"
                         id="email"
+                        type="email"
                         name="email"
                         placeholder="Email"
                         required
                       />
                       <label htmlFor="email">Email<span>*</span></label>
-                      <ValidationError
-                        prefix="Email"
-                        field="email"
-                        errors={state.errors}
-                        className="text-red-500 text-sm mt-1"
-                      />
+                      <ValidationError prefix="Email" field="email" errors={state.errors} />
                     </div>
 
                     <div className="o-field flex-wrap">
                       <input
-                        type="text"
                         id="company"
+                        type="text"
                         name="company"
                         placeholder="Company"
                       />
@@ -160,8 +105,8 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose, pr
 
                     <div className="o-field flex-wrap">
                       <input
-                        type="tel"
                         id="phone"
+                        type="tel"
                         name="phone"
                         placeholder="Phone"
                       />
@@ -177,89 +122,24 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose, pr
                         className="px-5 py-4"
                       />
                       <label htmlFor="message">Additional Notes</label>
-                      <ValidationError
-                        prefix="Message"
-                        field="message"
-                        errors={state.errors}
-                        className="text-red-500 text-sm mt-1"
-                      />
+                      <ValidationError prefix="Message" field="message" errors={state.errors} />
                     </div>
 
-                    {/* Hidden fields for project data */}
-                    <input
-                      type="hidden"
-                      name="selected_services"
-                      value={projectData.selectedServices.map(service =>
-                        `${service.category}: ${service.title}`
-                      ).join('\n')}
-                    />
-                    <input
-                      type="hidden"
-                      name="timeline"
-                      value={projectData.estimateResult.timelineRange}
-                    />
-                    <input
-                      type="hidden"
-                      name="investment"
-                      value={projectData.estimateResult.investmentRange}
-                    />
-                    <input
-                      type="hidden"
-                      name="complexity_rating"
-                      value={projectData.estimateResult.complexityRating.toString()}
-                    />
-                    <input
-                      type="hidden"
-                      name="ai_insight"
-                      value={projectData.estimateResult.aiInsight}
-                    />
-                    <input
-                      type="hidden"
-                      name="timeline_priority"
-                      value={projectData.projectContext.timeline}
-                    />
-                    <input
-                      type="hidden"
-                      name="data_volume"
-                      value={projectData.projectContext.dataVolume}
-                    />
-                    <input
-                      type="hidden"
-                      name="team_size"
-                      value={projectData.projectContext.teamSize}
-                    />
-                    <input
-                      type="hidden"
-                      name="system_integration"
-                      value={projectData.projectContext.systemIntegration ? 'Yes' : 'No'}
-                    />
-                    <input
-                      type="hidden"
-                      name="api_integrations"
-                      value={projectData.projectContext.apiIntegrations.toString()}
-                    />
-                    <input
-                      type="hidden"
-                      name="project_complexity"
-                      value={`${projectData.projectContext.complexity}/10`}
-                    />
+                    {/* Project Data Fields */}
+                    <input type="hidden" name="selected_services" value={projectData.selectedServices.map(service => `${service.category}: ${service.title}`).join('\n')} />
+                    <input type="hidden" name="timeline" value={projectData.estimateResult.timelineRange} />
+                    <input type="hidden" name="investment" value={projectData.estimateResult.investmentRange} />
+                    <input type="hidden" name="complexity_rating" value={projectData.estimateResult.complexityRating.toString()} />
+                    <input type="hidden" name="ai_insight" value={projectData.estimateResult.aiInsight} />
+                    <input type="hidden" name="timeline_priority" value={projectData.projectContext.timeline} />
+                    <input type="hidden" name="data_volume" value={projectData.projectContext.dataVolume} />
+                    <input type="hidden" name="team_size" value={projectData.projectContext.teamSize} />
+                    <input type="hidden" name="system_integration" value={projectData.projectContext.systemIntegration ? 'Yes' : 'No'} />
+                    <input type="hidden" name="api_integrations" value={projectData.projectContext.apiIntegrations.toString()} />
+                    <input type="hidden" name="project_complexity" value={`${projectData.projectContext.complexity}/10`} />
                     {projectData.projectContext.description && (
-                      <input
-                        type="hidden"
-                        name="project_description"
-                        value={projectData.projectContext.description}
-                      />
+                      <input type="hidden" name="project_description" value={projectData.projectContext.description} />
                     )}
-                    <input
-                      type="hidden"
-                      name="raw_project_data"
-                      value={JSON.stringify({
-                        selectedServices: projectData.selectedServices,
-                        projectContext: projectData.projectContext,
-                        estimateResult: projectData.estimateResult,
-                        submittedAt: new Date().toISOString(),
-                      })}
-                    />
 
                     <div className="flex justify-end space-x-3 pt-4">
                       <button

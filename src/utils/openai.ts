@@ -2,8 +2,38 @@ import OpenAI from 'openai';
 import { ProjectContext } from '../types/project';
 import { services } from '../data/services';
 
+// Declare global window property
+declare global {
+  interface Window {
+    ProjectEstimatorConfig?: {
+      apiKey: string;
+    };
+  }
+}
+
+// Get API key from environment variable or window object
+const getApiKey = () => {
+  try {
+    // First check WordPress config
+    if (typeof window !== 'undefined' && window.ProjectEstimatorConfig?.apiKey) {
+      return window.ProjectEstimatorConfig.apiKey;
+    }
+
+    // Fallback to environment variable if available
+    if (import.meta.env.VITE_OPENAI_API_KEY) {
+      return import.meta.env.VITE_OPENAI_API_KEY;
+    }
+
+    console.error('OpenAI API key not found in configuration');
+    return ''; // Return empty string instead of throwing
+  } catch (error) {
+    console.error('Error retrieving API key:', error);
+    return ''; // Return empty string on error
+  }
+};
+
 const openai = new OpenAI({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  apiKey: getApiKey() || 'MISSING_API_KEY', // Provide a default to prevent undefined
   dangerouslyAllowBrowser: true
 });
 
