@@ -79,75 +79,89 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose, pr
             {state.succeeded ? (
               <div className="text-center py-8">
                 <h3 className="text-lg font-semibold text-text mb-2">Thank you for your interest!</h3>
-                <p className="text-text/70">
-                  We'll be in touch shortly to schedule a meeting and discuss your project in detail.
+                <p className="text-text/70 mb-6">
+                  We'll be in touch shortly to discuss your project in detail. <br />Feel free to book your meeting now to begin the conversation.
                 </p>
+                <a
+                  href="https://calendly.com/tpitre/30min"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="o-button inline-block"
+                >
+                  <span data-text="Schedule Meeting Now">Schedule Meeting Now</span>
+                </a>
               </div>
             ) : (
-              <form onSubmit={handleFormSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-[#a49981] mb-1">
-                    Name *
-                  </label>
+              <form onSubmit={handleFormSubmit} className="space-y-10">
+                <div className="o-field flex-wrap">
                   <input
                     type="text"
                     id="name"
                     name="name"
+                    placeholder="Name"
                     required
-                    className="w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
                   />
-                  <ValidationError prefix="Name" field="name" errors={state.errors} />
+                  <label htmlFor="name">Name<span>*</span></label>
+                  <ValidationError
+                    prefix="Name"
+                    field="name"
+                    errors={state.errors}
+                    className="text-red-500 text-sm mt-1"
+                  />
                 </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-[#a49981] mb-1">
-                    Email *
-                  </label>
+                <div className="o-field flex-wrap">
                   <input
                     type="email"
                     id="email"
                     name="email"
+                    placeholder="Email"
                     required
-                    className="w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
                   />
-                  <ValidationError prefix="Email" field="email" errors={state.errors} />
+                  <label htmlFor="email">Email<span>*</span></label>
+                  <ValidationError
+                    prefix="Email"
+                    field="email"
+                    errors={state.errors}
+                    className="text-red-500 text-sm mt-1"
+                  />
                 </div>
 
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium text-[#a49981] mb-1">
-                    Company
-                  </label>
+                <div className="o-field flex-wrap">
                   <input
                     type="text"
                     id="company"
                     name="company"
-                    className="w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
+                    placeholder="Company"
                   />
+                  <label htmlFor="company">Company</label>
                 </div>
 
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-[#a49981] mb-1">
-                    Phone
-                  </label>
+                <div className="o-field flex-wrap">
                   <input
                     type="tel"
                     id="phone"
                     name="phone"
-                    className="w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text"
+                    placeholder="Phone"
                   />
+                  <label htmlFor="phone">Phone</label>
                 </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-[#a49981] mb-1">
-                    Additional Notes
-                  </label>
+                <div className="o-field flex-wrap">
                   <textarea
                     id="message"
                     name="message"
-                    rows={3}
-                    className="w-full px-3 py-2 bg-[#333] border border-accent/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-text resize-none"
+                    rows={4}
+                    placeholder=" "
+                    className="px-5 py-4"
                   />
-                  <ValidationError prefix="Message" field="message" errors={state.errors} />
+                  <label htmlFor="message">Additional Notes</label>
+                  <ValidationError
+                    prefix="Message"
+                    field="message"
+                    errors={state.errors}
+                    className="text-red-500 text-sm mt-1"
+                  />
                 </div>
 
                 {/* Hidden fields for project data */}
@@ -230,16 +244,16 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose, pr
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-4 py-2 text-text/70 hover:text-text transition-colors"
+                    className="o-button"
                   >
-                    Cancel
+                    <span data-text="Cancel">Cancel</span>
                   </button>
                   <button
                     type="submit"
                     disabled={state.submitting}
-                    className="px-4 py-2 bg-accent text-text rounded-lg font-semibold hover:bg-accent/90 transition-colors disabled:opacity-50"
+                    className="o-button"
                   >
-                    Book Meeting
+                    <span data-text="Request Review">Request Review</span>
                   </button>
                 </div>
               </form>
