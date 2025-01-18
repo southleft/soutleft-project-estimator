@@ -135,56 +135,46 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
           </div>
         </div>
 
-        <div className="select-wrapper">
-          <select
-            id="timeline"
-            value={context.timeline}
-            onChange={(e) => handleChange(e)}
-            className="bg-[#333]"
-          >
-            <option value="Urgent">Urgent (ASAP)</option>
-            <option value="Normal">Normal (1-3 months)</option>
-            <option value="Flexible">Flexible (3+ months)</option>
-          </select>
-          <ChevronDown className="chevron-icon" />
+        <div>
+          <LabelWithTooltip
+            label="Timeline Priority"
+            tooltip="Outline your timeline priorities to keep your project on track, whether urgent or flexible."
+          />
+          <div className="select-wrapper mt-2">
+            <select
+              id="timeline"
+              name="timeline"
+              value={context.timeline}
+              onChange={handleChange}
+              className="bg-[#333]"
+            >
+              <option value="Urgent">Urgent (ASAP)</option>
+              <option value="Normal">Normal (1-3 months)</option>
+              <option value="Flexible">Flexible (3+ months)</option>
+            </select>
+            <ChevronDown className="chevron-icon" />
+          </div>
         </div>
 
         <div>
           <LabelWithTooltip
-            label="API Integrations"
-            tooltip="Specify the number of API integrations needed for seamless connectivity and enhanced functionality."
+            label="Data Processing Volume"
+            tooltip="Determine the volume of data processing required to customize your scalable solutions."
           />
-          <div className="mt-2 flex items-center space-x-4">
-            <button
-              onClick={() => onChange({ ...context, apiIntegrations: Math.max(0, context.apiIntegrations - 1) })}
-              className="p-2 rounded-md bg-accent/10 text-accent hover:bg-accent/20"
+          <div className="select-wrapper mt-2">
+            <select
+              id="dataVolume"
+              name="dataVolume"
+              value={context.dataVolume}
+              onChange={handleChange}
+              className="bg-[#333]"
             >
-              <Minus className="w-4 h-4" />
-            </button>
-            <span className="text-lg font-medium w-8 text-center text-text">
-              {context.apiIntegrations}
-            </span>
-            <button
-              onClick={() => onChange({ ...context, apiIntegrations: context.apiIntegrations + 1 })}
-              className="p-2 rounded-md bg-accent/10 text-accent hover:bg-accent/20"
-            >
-              <Plus className="w-4 h-4" />
-            </button>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+            <ChevronDown className="chevron-icon" />
           </div>
-        </div>
-
-        <div className="select-wrapper">
-          <select
-            id="dataVolume"
-            value={context.dataVolume}
-            onChange={(e) => handleChange(e)}
-            className="bg-[#333]"
-          >
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-          </select>
-          <ChevronDown className="chevron-icon" />
         </div>
 
         <div>
@@ -217,18 +207,25 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
           </div>
         </div>
 
-        <div className="select-wrapper">
-          <select
-            id="teamSize"
-            value={context.teamSize}
-            onChange={(e) => handleChange(e)}
-            className="bg-[#333]"
-          >
-            <option value="Small">Small (1-3 developers)</option>
-            <option value="Medium">Medium (4-7 developers)</option>
-            <option value="Large">Large (8+ developers)</option>
-          </select>
-          <ChevronDown className="chevron-icon" />
+        <div>
+          <LabelWithTooltip
+            label="Development Team Size"
+            tooltip="Choose the ideal team size to match your project scope and delivery targets."
+          />
+          <div className="select-wrapper mt-2">
+            <select
+              id="teamSize"
+              name="teamSize"
+              value={context.teamSize}
+              onChange={handleChange}
+              className="bg-[#333]"
+            >
+              <option value="Small">Small (1-3 developers)</option>
+              <option value="Medium">Medium (4-7 developers)</option>
+              <option value="Large">Large (8+ developers)</option>
+            </select>
+            <ChevronDown className="chevron-icon" />
+          </div>
         </div>
       </div>
     </>
