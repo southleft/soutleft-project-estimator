@@ -80,9 +80,6 @@ const ProjectScopeExplorer: React.FC = () => {
             exit={{ opacity: 0, height: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <h2 className="text-xl font-semibold text-[#a49981] mb-4">
-              {isLoading ? 'Generating Estimate...' : 'Estimated Services'}
-            </h2>
             {isLoading ? (
               <div className="flex items-center justify-center p-12">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
@@ -104,11 +101,6 @@ const ProjectScopeExplorer: React.FC = () => {
                     )
                     .filter(service => selectedServices.includes(service.id))}
                   projectContext={projectContext}
-                  onSubmit={async (submission) => {
-                    // Here you would typically send this data to your backend
-                    console.log('Project Submission:', submission);
-                    alert('Thank you! We will contact you shortly to schedule a meeting.');
-                  }}
                 />
               )
             )}

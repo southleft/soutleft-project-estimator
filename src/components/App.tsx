@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectScopeExplorer from './components/ProjectScopeExplorer';
+import ProjectScopeExplorer from './ProjectScopeExplorer';
 
 const App: React.FC = () => {
   return (

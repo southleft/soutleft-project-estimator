@@ -23,36 +23,49 @@ export async function generateEstimate(
 Project Scope:
 ${selectedServices.join(', ')}
 
-Timeline Calculation Factors:
+Timeline Impact:
 - Base: 1-2 months per service
-- Timeline Priority: ${projectContext.timeline} (Urgent: -20%, Normal: +0%, Flexible: +20%)
-- Team Size: ${projectContext.teamSize} (Small: +20%, Medium: +0%, Large: -20%)
-- Data Volume: ${projectContext.dataVolume} (Low: -10%, Medium: +0%, High: +20%)
+- Urgent: +25% to total cost (rush fee)
+- Normal: No adjustment
+- Flexible: -15% from total cost (allows for better planning and discovery)
 
-Investment Calculation Factors:
-- Base: $20-30k per service
-- Complexity Multiplier: ${projectContext.complexity}/10 (+10% per point above 5)
-- API Integrations: ${projectContext.apiIntegrations} (+$15k per integration)
-- System Integration: ${projectContext.systemIntegration ? '+25% total cost' : 'No additional cost'}
-- Team Size Impact: ${projectContext.teamSize} (Small: -10%, Medium: +0%, Large: +20%)
+Data Processing Volume Impact:
+- Low: Base cost (minimal data processing requirements)
+- Medium: +25% to total cost (moderate data processing and storage needs)
+- High: +45% to total cost (significant data processing, storage, and optimization requirements)
 
-Complexity Rating Factors (1-10 scale):
+API Integration Costs:
+- First integration: +$15,000
+- Each additional: +$8,000 (reduced cost due to existing integration infrastructure)
+
+System Integration Impact:
+- If required: +20% to total cost (accounts for additional complexity and testing)
+
+Team Size Impact on Costs:
+- Small (1-3): Base cost
+- Medium (4-7): +30% (coordination overhead)
+- Large (8+): +50% (significant coordination and communication overhead)
+
+Complexity Calculation (should align with UI display):
 - User Input: ${projectContext.complexity}/10 (weighted 40%)
 - Data Volume: ${projectContext.dataVolume} (Low: 1-3, Medium: 4-6, High: 7-10)
-- Integration Complexity: ${projectContext.systemIntegration ? 'Yes' : 'No'} (+2 if yes)
+- Integration Complexity: ${projectContext.systemIntegration ? 'Yes (+2)' : 'No'}
 - API Count: ${projectContext.apiIntegrations} (+1 per API up to +3)
 - Service Count: ${selectedServices.length} (+1 per 2 services)
+Final complexity should be reflected in both the rating and cost adjustments.
 
 Additional Context:
 ${projectContext.description || 'No additional details provided.'}
 
-Respond with a JSON object:
+Respond with a JSON object containing:
 {
   "timelineRange": "X-Y months",
   "investmentRange": "$XXk-$YYk",
   "complexityRating": <1-10>,
-  "aiInsight": "<key considerations and recommendations focusing on the most impactful factors>"
-}`;
+  "aiInsight": "<key considerations and recommendations focusing on timeline and cost factors>"
+}
+
+The investment range should reflect all the above factors cumulatively, with the complexity rating directly influencing the final cost.`;
 
   try {
     const completion = await openai.chat.completions.create({

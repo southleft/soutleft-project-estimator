@@ -97,7 +97,7 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
           <div className="flex items-center justify-between mb-2">
             <LabelWithTooltip
               label="Tell us about your project"
-              tooltip="Share your project vision and requirements to help us understand your needs better."
+              tooltip="Share your project vision and requirements to help us understand your needs better. Click the refresh icon → to update the estimate with your description."
             />
             <button
               onClick={handleRefreshEstimate}
@@ -174,6 +174,30 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
               <option value="High">High</option>
             </select>
             <ChevronDown className="chevron-icon" />
+          </div>
+        </div>
+
+        <div>
+          <LabelWithTooltip
+            label="API Integrations"
+            tooltip="Specify the number of API integrations needed for seamless connectivity and enhanced functionality."
+          />
+          <div className="mt-2 flex items-center space-x-4">
+            <button
+              onClick={() => onChange({ ...context, apiIntegrations: Math.max(0, context.apiIntegrations - 1) })}
+              className="p-2 rounded-md bg-accent/10 text-accent hover:bg-accent/20"
+            >
+              <Minus className="w-4 h-4" />
+            </button>
+            <span className="text-lg font-medium w-8 text-center text-text">
+              {context.apiIntegrations}
+            </span>
+            <button
+              onClick={() => onChange({ ...context, apiIntegrations: context.apiIntegrations + 1 })}
+              className="p-2 rounded-md bg-accent/10 text-accent hover:bg-accent/20"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
