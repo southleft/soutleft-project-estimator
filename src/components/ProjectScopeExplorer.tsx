@@ -114,7 +114,7 @@ const ProjectScopeExplorer: React.FC = () => {
           {/* Available Services Column */}
           <div className="flex flex-col h-full space-y-4">
             <h3 className="text-lg font-semibold text-[#a49981]">Available Services</h3>
-            <div className="flex-1 overflow-y-auto pr-2 space-y-6">
+            <div className="flex-1 pr-2 space-y-6">
               {services.map((category) => (
                 <div key={category.category}>
                   <h4 className="text-sm font-medium text-[#a49981] mb-2 sticky top-0 backdrop-blur-sm py-2">
