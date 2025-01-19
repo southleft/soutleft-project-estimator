@@ -67,6 +67,7 @@ const selectWrapperStyle = `
 const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChange }) => {
   const [description, setDescription] = useState(context.description);
   const [showSystemIntegrationTooltip, setShowSystemIntegrationTooltip] = useState(false);
+  const [showContentMigrationTooltip, setShowContentMigrationTooltip] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement>
@@ -157,25 +158,56 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
         </div>
 
         <div>
-          <LabelWithTooltip
-            label="Data Processing Volume"
-            tooltip="Determine the volume of data processing required to customize your scalable solutions."
-          />
-          <div className="select-wrapper mt-2">
-            <select
-              id="dataVolume"
-              name="dataVolume"
-              value={context.dataVolume}
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              name="contentMigration"
+              checked={context.contentMigration}
               onChange={handleChange}
-              className="bg-[#333]"
-            >
-              <option value="N/A">N/A</option>
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-            </select>
-            <ChevronDown className="chevron-icon" />
+              className="rounded border-accent/20 bg-background text-accent focus:ring-accent"
+            />
+            <div className="flex items-center">
+              <span className="text-sm font-medium text-[#a49981]">Content migration required</span>
+              <div className="relative inline-block ml-2">
+                <button
+                  type="button"
+                  onClick={() => setShowContentMigrationTooltip(!showContentMigrationTooltip)}
+                  onMouseEnter={() => setShowContentMigrationTooltip(true)}
+                  onMouseLeave={() => setShowContentMigrationTooltip(false)}
+                  className="p-1 text-text/50 hover:text-accent focus:outline-none transition-colors"
+                  aria-label="More information"
+                >
+                  <HelpCircle className="w-4 h-4" />
+                </button>
+                {showContentMigrationTooltip && (
+                  <Tooltip text="Indicate if your project requires migrating existing content from another platform or system. This helps us plan for data transfer and content restructuring." />
+                )}
+              </div>
+            </div>
           </div>
+
+          {context.contentMigration && (
+            <div className="mt-4">
+              <LabelWithTooltip
+                label="Content Volume"
+                tooltip="Estimate the amount of content (pages, posts, media) that needs to be migrated."
+              />
+              <div className="select-wrapper mt-2">
+                <select
+                  id="contentVolume"
+                  name="contentVolume"
+                  value={context.contentVolume}
+                  onChange={handleChange}
+                  className="bg-[#333]"
+                >
+                  <option value="Small">Small (10-50 items)</option>
+                  <option value="Medium">Medium (50-500 items)</option>
+                  <option value="Large">Large (500+ items)</option>
+                </select>
+                <ChevronDown className="chevron-icon" />
+              </div>
+            </div>
+          )}
         </div>
 
         <div>
@@ -213,7 +245,7 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
             />
             <div className="flex items-center">
               <span className="text-sm font-medium text-[#a49981]">Integration with existing systems required</span>
-              <div className="relative inline-block">
+              <div className="relative inline-block ml-2">
                 <button
                   type="button"
                   onClick={() => setShowSystemIntegrationTooltip(!showSystemIntegrationTooltip)}

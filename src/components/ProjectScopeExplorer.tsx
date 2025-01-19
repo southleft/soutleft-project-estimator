@@ -11,7 +11,8 @@ import { generateEstimate } from '../utils/openai';
 const initialProjectContext: ProjectContext = {
   complexity: 5,
   timeline: 'Normal',
-  dataVolume: 'Medium',
+  contentMigration: false,
+  contentVolume: 'N/A',
   teamSize: 'Small',
   systemIntegration: false,
   apiIntegrations: 0,

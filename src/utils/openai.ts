@@ -69,6 +69,12 @@ Timeline Impact:
 - Normal: No adjustment
 - Flexible: -15% from total cost (optimal resource planning)
 
+Content Migration Impact (if required):
+- Small (10-50 items): +$5k to base cost, +2 weeks to timeline
+- Medium (50-500 items): +$12k to base cost, +4 weeks to timeline
+- Large (500+ items): +$25k to base cost, +8 weeks to timeline
+Note: Migration complexity affects level of effort significantly
+
 Data Processing Volume Impact:
 - N/A: No impact on cost
 - Low: No adjustment
@@ -88,8 +94,8 @@ Team Size Impact:
 - Large (8+): +45% (significant coordination overhead)
 
 Level of Effort Calculation (1-10 scale):
-- User's Complexity Input: ${projectContext.complexity}/10 (weighted 40%)
-- Data Volume: ${projectContext.dataVolume} (N/A: 0, Low: 2, Medium: 5, High: 8)
+- User's Complexity Input: ${projectContext.complexity}/10 (weighted 35%)
+- Content Migration: ${projectContext.contentMigration ? `Yes (${projectContext.contentVolume})` : 'No'} (N/A: 0, Small: +1, Medium: +2, Large: +3)
 - Integration Complexity: ${projectContext.systemIntegration ? 'Yes (+2)' : 'No'}
 - API Count: ${projectContext.apiIntegrations} (+1 per API up to +3)
 - Service Count: ${selectedServices.length} (+1 per service)
@@ -100,7 +106,7 @@ ${projectContext.description || 'No additional details provided.'}
 Selected Configuration Summary:
 - Services Selected: ${selectedServices.length} (${selectedServices.join(', ')})
 - Timeline Priority: ${projectContext.timeline}
-- Data Volume: ${projectContext.dataVolume}
+- Content Migration: ${projectContext.contentMigration ? `Required (${projectContext.contentVolume})` : 'Not Required'}
 - API Integrations: ${projectContext.apiIntegrations}
 - System Integration Required: ${projectContext.systemIntegration ? 'Yes' : 'No'}
 - Team Size: ${projectContext.teamSize}
@@ -142,11 +148,13 @@ IMPORTANT RULES:
 6. Use concrete numbers and percentages when explaining adjustments
 7. Keep insights factual and directly tied to the estimation model
 8. Maintain a professional, consultative tone
+9. Always factor in content migration costs when selected
+10. Consider migration volume in timeline estimates
 
 Examples of good insights:
-- "Your Design Systems Development project starts at a $40k base cost. With your selected small team size and normal timeline priority, we maintain the base cost while ensuring efficient delivery."
-- "The timeline of 3-4 months reflects the comprehensive nature of design systems work, with your chosen normal priority timeline allowing for proper documentation and testing phases."
-- "To optimize within your $40-60k budget, we recommend focusing initial development on core components, considering your complexity rating of 7/10."
+- "Your Design Systems Development project starts at a $40k base cost. With content migration (${projectContext.contentVolume}) adding $12k and extending the timeline by 4 weeks..."
+- "The timeline of 3-4 months includes necessary time for content migration of ${projectContext.contentVolume} items..."
+- "To optimize within your budget, we recommend a phased content migration approach, given your selection of ${projectContext.contentVolume} volume..."
 }
 
 IMPORTANT RULES:
