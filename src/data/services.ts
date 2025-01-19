@@ -1,69 +1,69 @@
 export const services = [
   {
-    category: 'Design & Design Systems',
+    category: 'Design Systems and Product Accelerators',
     items: [
       {
-        id: 'design-system',
-        title: 'Design System Development',
-        description: 'Building scalable component libraries and style guides designed to streamline design-to-development workflows.',
+        id: 'design-system-dev',
+        title: 'Design Systems Development',
+        description: 'Building scalable component libraries and design systems that streamline development workflows and ensure consistency.',
         icon: 'Layers'
       },
       {
-        id: 'ui-design',
-        title: 'UI/UX Design',
-        description: 'Crafting user-centric interfaces that bridge creativity and functionality, ensuring a seamless user experience.',
-        icon: 'Paintbrush'
+        id: 'ux-ui-design',
+        title: 'UX, UI Design and Prototyping',
+        description: 'Creating intuitive user experiences and beautiful interfaces with rapid prototyping for quick validation.',
+        icon: 'Palette'
       }
     ]
   },
   {
-    category: 'Advanced Development',
+    category: 'Advanced Development Solutions',
     items: [
       {
-        id: 'ai-integration',
-        title: 'AI Integration',
-        description: 'Harness the power of custom AI solutions and ML model deployment to transform your digital landscape.',
+        id: 'ai-product-dev',
+        title: 'AI Product Development and Integration',
+        description: 'Building and integrating AI-powered solutions to enhance product capabilities and user experiences.',
         icon: 'Brain'
       },
       {
-        id: 'data-pipeline',
-        title: 'Data Pipeline Development',
-        description: "Develop scalable data processing and analytics systems tailored for your industry's needs.",
-        icon: 'Network'
+        id: 'headless-cms',
+        title: 'Headless CMS Architectures',
+        description: 'Implementing flexible, scalable content management systems with modern headless architecture.',
+        icon: 'Database'
       }
     ]
   },
   {
-    category: 'Web Development',
+    category: 'Web Design and Development',
     items: [
       {
-        id: 'frontend',
-        title: 'Front-end Development',
-        description: 'Creating modern, responsive web applications with precision and expertise, ensuring cross-platform excellence.',
-        icon: 'Layout'
+        id: 'cms-theme-dev',
+        title: 'CMS Theme Development',
+        description: 'Creating custom, high-performance themes for modern content management systems.',
+        icon: 'LayoutTemplate'
       },
       {
-        id: 'backend',
-        title: 'Back of the Front-end Development',
-        description: 'Designing scalable server architectures and robust APIs to support your digital operations.',
-        icon: 'ServerCog'
+        id: 'responsive-web',
+        title: 'Mobile-First Responsive Web Design',
+        description: 'Building responsive websites that provide optimal user experience across all devices.',
+        icon: 'Smartphone'
       }
     ]
   },
   {
-    category: 'Consulting',
+    category: 'Front End Development Consulting',
     items: [
       {
-        id: 'tech-consulting',
-        title: 'Technical Consulting',
-        description: "Offering expert guidance on architecture and tech stack to optimize your project's potential.",
-        icon: 'Compass'
+        id: 'ai-consulting',
+        title: 'AI Development Consulting',
+        description: 'Strategic guidance on implementing AI solutions and optimizing development processes.',
+        icon: 'Lightbulb'
       },
       {
-        id: 'ai-strategy',
-        title: 'AI Strategy',
-        description: 'Develop an AI implementation roadmap that aligns with your business objectives and technological goals.',
-        icon: 'TreeDeciduous'
+        id: 'tech-stack',
+        title: 'Tech Stack Strategy',
+        description: 'Expert advice on selecting and implementing the right technologies for your project.',
+        icon: 'GitFork'
       }
     ]
   }

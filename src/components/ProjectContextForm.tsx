@@ -169,6 +169,7 @@ const ProjectContextForm: React.FC<ProjectContextFormProps> = ({ context, onChan
               onChange={handleChange}
               className="bg-[#333]"
             >
+              <option value="N/A">N/A</option>
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>

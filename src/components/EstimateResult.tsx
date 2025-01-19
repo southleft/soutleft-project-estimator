@@ -20,38 +20,27 @@ const EstimateResult: React.FC<EstimateResultProps> = ({
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-background/50 border border-accent/20 p-6 rounded-lg hover:shadow-glow transition-all duration-300">
-          <div className="flex items-center space-x-2 mb-4">
+          <div className="flex items-start space-x-2 mb-2">
             <Clock className="w-6 h-6 text-accent" />
-            <h3 className="font-semibold text-lg text-text">Timeline</h3>
+            <h3 className="font-semibold text-lg text-[#a49981]">Timeline</h3>
           </div>
           <p className="text-2xl font-bold text-text">{result.timelineRange}</p>
         </div>
 
         <div className="bg-background/50 border border-accent/20 p-6 rounded-lg hover:shadow-glow transition-all duration-300">
-          <div className="flex items-center space-x-2 mb-4">
+          <div className="flex items-start space-x-2 mb-2">
             <DollarSign className="w-6 h-6 text-accent" />
-            <h3 className="font-semibold text-lg text-text">Investment</h3>
+            <h3 className="font-semibold text-lg text-[#a49981]">Investment</h3>
           </div>
           <p className="text-2xl font-bold text-text">{result.investmentRange}</p>
         </div>
 
         <div className="bg-background/50 border border-accent/20 p-6 rounded-lg hover:shadow-glow transition-all duration-300">
-          <div className="flex items-center space-x-2 mb-4">
+          <div className="flex items-start space-x-2 mb-2">
             <BarChart2 className="w-6 h-6 text-accent" />
-            <h3 className="font-semibold text-lg text-text">Complexity</h3>
+            <h3 className="font-semibold text-lg text-[#a49981]">Level of Effort</h3>
           </div>
-          <div className="flex items-center space-x-2">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className={`w-4 h-4 rounded-full ${
-                  i < Math.round(result.complexityRating / 2)
-                    ? 'bg-accent'
-                    : 'bg-accent/20'
-                }`}
-              />
-            ))}
-          </div>
+          <p className="text-2xl font-bold text-text">{result.levelOfEffort}/10</p>
         </div>
       </div>
 
@@ -61,7 +50,7 @@ const EstimateResult: React.FC<EstimateResultProps> = ({
             <Lightbulb className="w-6 h-6 text-accent" />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-lg mb-2 text-text">Southleft AI Insight</h3>
+            <h3 className="font-semibold text-lg mb-2 text-[#a49981]">Southleft AI Insights</h3>
             <p className="text-text/80">{result.aiInsight}</p>
           </div>
         </div>
@@ -74,9 +63,6 @@ const EstimateResult: React.FC<EstimateResultProps> = ({
         >
           <span data-text="Book a Meeting to Discuss Your Estimate">Book a Meeting to Discuss Your Estimate</span>
         </button>
-        <p className="mt-3 text-sm text-text/70 text-center">
-          Get personalized insights and discuss your project details with our team.
-        </p>
       </div>
 
       <ContactFormModal
